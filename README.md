@@ -1,9 +1,8 @@
 # bash scripting
 
-This is a presentation about bash, written in [remark](http://remarkjs.org).
+This is a presentation about bash, written in [remark](http://remarkjs.com).
 
-It can be viewed and presented [directly in a browser](
-http://christophgysin.github.io/bash-scripting/bash-scripting.html).
+It can be viewed and presented directly in a browser:
 
 - [bash-scripting.html](
   http://christophgysin.github.io/bash-scripting/bash-scripting.html)
