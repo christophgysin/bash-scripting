@@ -1,0 +1,26 @@
+- regex
+  - regex with spaces
+  - BASH_REMATCH[i]
+
+- good habits:
+  - foo.sh
+  - source foo.inc.sh
+
+- interactive use:
+  - readline
+    - editing
+      - ^W, ^K, ^C
+    - set -o vi
+    - history
+    - inputrc
+    - history search
+    - man 3 readline
+  - aliases
+  - completion
+    - commands
+    - paths
+  - programmable completion
+    - ssh hosts
+    - git branches
+    - own example?
+  - history expansion
