@@ -1,3 +1,6 @@
+- i/o redirection
+  - here-strings
+
 - regex
   - regex with spaces
   - BASH_REMATCH[i]
