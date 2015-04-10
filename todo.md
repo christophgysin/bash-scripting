@@ -9,6 +9,9 @@
   - foo.sh
   - source foo.inc.sh
 
+- pitfalls:
+  - i=0; let i++ (returns 1)
+
 - interactive use:
   - readline
     - editing
