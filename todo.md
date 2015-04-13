@@ -11,6 +11,7 @@
 
 - pitfalls:
   - i=0; let i++ (returns 1)
+  - return (with no arguments)
 
 - interactive use:
   - readline
