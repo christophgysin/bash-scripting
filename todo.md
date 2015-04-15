@@ -1,17 +1,6 @@
-- i/o redirection
-  - here-strings
-
-- regex
-  - regex with spaces
-  - BASH_REMATCH[i]
-
 - good habits:
   - foo.sh
   - source foo.inc.sh
-
-- pitfalls:
-  - i=0; let i++ (returns 1)
-  - return (with no arguments)
 
 - interactive use:
   - readline

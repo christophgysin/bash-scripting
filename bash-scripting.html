@@ -605,7 +605,8 @@ HELLO, WORLD!
 ```
 
 ---
-#functions
+name: functions
+# functions
 
 --
 ```bash
@@ -630,6 +631,69 @@ $ greeter bob
 --
 ```bash
 Hello bob!
+```
+
+---
+template: functions
+
+--
+```bash
+$ function func() { return 0; }
+$ func; echo $?
+```
+--
+```bash
+0
+```
+---
+template: functions
+```bash
+$ function func() { return 1; }
+$ func; echo $?
+```
+--
+```bash
+1
+```
+---
+template: functions
+```bash
+$ function func() { return -1; }
+$ func; echo $?
+```
+--
+```bash
+255
+```
+---
+template: functions
+```bash
+$ function func() { return 256; }
+$ func; echo $?
+```
+--
+```bash
+0
+```
+---
+template: functions
+```bash
+$ function func() { return; }
+$ func; echo $?
+```
+--
+```bash
+0
+```
+---
+template: functions
+```bash
+$ function func() { false; return; }
+$ func; echo $?
+```
+--
+```bash
+1
 ```
 
 ---
@@ -1587,6 +1651,7 @@ s is:
 ```
 
 ---
+name: regex
 # regular expressions
 
 --
@@ -1605,6 +1670,51 @@ done
 ```bash
 match: bar
 match: baz
+```
+---
+template: regex
+
+--
+```bash
+$ regex="^x x"
+```
+--
+```bash
+$ for s in "xxx" "x x" "x xyz"; do
+    if [[ "${s}" =~ $regex ]]; then
+        echo match: ${s}
+    fi
+done
+```
+--
+```bash
+match: x x
+match: x xyz
+```
+
+---
+template: regex
+
+--
+```bash
+$ regex="^(.*):([0-9]+)"
+```
+--
+```bash
+$ while read s; do
+    if [[ "${s}" =~ $regex ]]; then
+        echo -n "file: ${BASH_REMATCH[1]}"
+        echo   " line: ${BASH_REMATCH[2]}"
+    fi
+done &lt;&lt;EOF
+source.cc:23
+header.hh:45
+EOF
+```
+--
+```bash
+file: source.cc line: 23
+file: header.hh line: 45
 ```
 
 ---
@@ -1752,7 +1862,55 @@ daemon
 mail
 [...]
 ```
+---
+name: here-strings
+# here-strings
+```bash
+$ input="foo:bar:baz"
+```
+--
+```bash
+$ echo "${input}" | cut -d: -f2
+bar
+```
+--
+```bash
+$ cut -d: -f2 &lt;&lt;&lt;"${input}"
+bar
+```
+---
+name: here-documents
+# here-documents
 
+--
+```bash
+$ apply_config --help
+Usage: apply_config &lt;config file&gt;
+```
+--
+```bash
+$ echo "var1=foo" &gt; config.txt
+$ echo "var2=bar" &gt;&gt; config.txt
+$ echo "var3=baz" &gt;&gt; config.txt
+$ apply_config config.txt
+```
+--
+```bash
+$ (
+    echo "var1=foo"
+    echo "var2=bar"
+    echo "var3=baz"
+  ) | apply_config -
+```
+---
+template: here-documents
+```bash
+$ apply_config - &lt;&lt;EOF
+var1=foo
+var2=bar
+var3=baz
+EOF
+```
 ---
 name: exec
 # exec
@@ -2229,6 +2387,7 @@ $ func
 ```bash
 done
 ```
+
 ---
 template: pitfalls-ex2
 
@@ -2259,6 +2418,56 @@ $ func
 (shell exits with code 1)
 ```
 
+---
+template: pitfalls
+
+--
+name: pitfalls-ex3
+```bash
+$ i=0
+$ let i++; echo $?
+```
+--
+```bash
+1
+```
+--
+```bash
+$ echo $i
+```
+```bash
+1
+```
+--
+```bash
+$ let i++; echo $?
+```
+--
+```bash
+0
+```
+
+---
+template: pitfalls-ex3
+
+---
+template: pitfalls
+
+```bash
+$ i=0
+$ i=$((i + 1)); echo $?
+```
+--
+```bash
+0
+```
+--
+```bash
+$ echo $i
+```
+```bash
+1
+```
 ---
 # coding style
 ```bash
