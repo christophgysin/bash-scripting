@@ -63,7 +63,6 @@ $ echo "Hello, world!"
 ```bash
 Hello, world!
 ```
-
 ---
 name: variables
 
@@ -75,7 +74,6 @@ template: variables
 ```bash
 $ foo=bar
 ```
-
 --
 ```bash
 $ echo $foo
@@ -87,112 +85,91 @@ template: variables
 ```bash
 $ foo=bar
 ```
-
 ```bash
 $ echo ${foo}
 ```
-
 --
 ```bash
 bar
 ```
-
 ---
 template: variables
 
 ```bash
 $ message="Hello"
 ```
-
 --
 ```bash
 $ echo ${message}
 ```
-
 --
 ```bash
 Hello
 ```
-
 --
 ```bash
 $ message+=", world!"
 ```
-
 --
 ```bash
 $ echo ${message}
 ```
-
 --
 ```bash
 Hello, world!
 ```
-
 ---
 template: variables
 
 ```bash
 $ message="x      x"
 ```
-
 --
 ```bash
 $ echo ${message}
 ```
-
 --
 ```bash
 x x
 ```
-
 --
 ```bash
 $ echo "${message}"
 ```
-
 --
 ```bash
 x      x
 ```
-
 ---
 template: variables
 
 ```bash
 $ string="abcdefg"
 ```
-
 --
 ```bash
 $ echo ${string:3}
 ```
-
 --
 ```bash
 defg
 ```
-
 --
 ```bash
 $ echo ${string:4:2}
 ```
-
 --
 ```bash
 ef
 ```
-
 --
 ```bash
 $ echo ${string: -1}
 ```
-
 --
 ```bash
 g
 ```
-
 ---
 name: quoting
 # quoting
@@ -361,71 +338,57 @@ $ bash -c 'echo $#' foo bar baz
 ```bash
 2
 ```
-
 ---
 name: arrays
-
 # arrays
 
 ---
 template: arrays
-
 ```bash
 $ a=(abc def)
 ```
-
 --
 ```bash
 $ echo ${a}
 ```
-
 --
 ```bash
 abc
 ```
-
 --
 ```bash
 $ echo ${a[1]}
 ```
-
 --
 ```bash
 def
 ```
-
 --
 ```bash
 $ echo ${a[@]}
 ```
-
 --
 ```bash
 abc def
 ```
-
 ---
 template: arrays
 
 ```bash
 $ a=(a b c)
 ```
-
 --
 ```bash
 $ a+=(d e f)
 ```
-
 --
 ```bash
 $ echo "${a[@]}"
 ```
-
 --
 ```bash
 a b c d e f
 ```
-
 ---
 template: arrays
 
@@ -435,72 +398,58 @@ $ a=(a b c)
 ```bash
 $ a+=d
 ```
-
 --
 ```bash
 $ echo "${a[@]}"
 ```
-
 --
 ```bash
 ad b c
 ```
-
 --
 ```bash
 $ a+=(d)
 ```
-
 --
 ```bash
 $ echo "${a[@]}"
 ```
-
 --
 ```bash
 $ ad b c d
 ```
-
 ---
 template: arrays
 
 ```bash
 $ a=(a b c d e f g)
 ```
-
 --
 ```bash
 $ echo ${#a[@]}
 ```
-
 --
 ```bash
 7
 ```
-
 --
 ```bash
 $ echo ${a[@]:2}
 ```
-
 --
 ```bash
 c d e f g
 ```
-
 --
 ```bash
 $ echo ${a[@]:2:3}
 ```
-
 --
 ```bash
 c d e
 ```
-
 ---
 name: associative
-
 # associative arrays
 
 --
@@ -549,7 +498,6 @@ $ echo ${a[email]}
 ```bash
 bob@domain.tld
 ```
-
 ---
 name: integer
 # integer
@@ -582,7 +530,6 @@ $ echo ${int}
 ```bash
 4
 ```
-
 ---
 name: uppercase
 # uppercase
@@ -695,7 +642,6 @@ $ func; echo $?
 ```bash
 1
 ```
-
 ---
 name: local
 # local variables
@@ -749,7 +695,6 @@ $ echo ${foo}
 ```bash
 2
 ```
-
 ---
 name: list
 # lists
@@ -779,7 +724,6 @@ $ false &amp;&amp; echo "is it?" || echo "nope, that's false"
 ```bash
 nope, that's false
 ```
-
 ---
 name: test
 # test
@@ -792,7 +736,6 @@ $ test foo = foo; echo $?
 ```bash
 0
 ```
-
 --
 ```bash
 $ test foo = foo &amp;&amp; echo true || echo false
@@ -809,7 +752,6 @@ $ test foo = bar &amp;&amp; echo true || echo false
 ```bash
 false
 ```
-
 ---
 template: test
 
@@ -828,121 +770,98 @@ $ [ foo = bar ] &amp;&amp; echo true || echo false
 ```bash
 false
 ```
-
 ---
 template: test
 
 ```bash
 [ ! <expression> ] # expression is false
 ```
-
 --
 ```bash
 [ <expr1> -a <expr2> ] # both are true
 ```
-
 --
 ```bash
 [ <expr1> -o <expr2> ] # either is true
 ```
-
 --
 ```bash
 [ -n <string> ] # string length is nonzero
 ```
-
 --
 ```bash
 [ -z <string> ] # string length is zero
 ```
-
 --
 ```bash
 [ <string1> = <string2> ] # strings are equal
 ```
-
 --
 ```bash
 [ <string1> != <string2> ] # strings are not equal
 ```
-
 ---
 template: test
 
 ```bash
 [ <int1> -eq <int2> ] # integers are equal
 ```
-
 --
 ```bash
 [ <int1> -ne <int2> ] # integers are not equal
 ```
-
 --
 ```bash
 [ <int1> -lt <int2> ] # int1 is less than int2
 ```
-
 --
 ```bash
 [ <int1> -le <int2> ] # int1 is less or equal int2
 ```
-
 --
 ```bash
 [ <int1> -gt <int2> ] # int1 is greater than int2
 ```
-
 --
 ```bash
 [ <int1> -ge <int2> ] # int1 is greater or equal int2
 ```
-
 ---
 template: test
 
 ```bash
 [ -e <file> ] # file exists
 ```
-
 --
 ```bash
 [ -f <file> ] # file exists and is a regular file
 ```
-
 --
 ```bash
 [ -L <file> ] # file exists and is a symbolic link
 ```
-
 --
 ```bash
 [ -d <file> ] # file exists and is a directory
 ```
-
 --
 ```bash
 [ -s <file> ] # file exists and has size greater than 0
 ```
-
 --
 ```bash
 [ -r <file> ] # file exists and is readable
 ```
-
 --
 ```bash
 [ -x <file> ] # file exists and is executable
 ```
-
 ---
 name: control-if
-
 # control structures: if/elif/else/fi
 
 --
 name: control-if-ex
-
 ```bash
 $ function f() {
     if [ $1 -lt 0 ]; then
@@ -984,10 +903,8 @@ $ f 2134567890
 ```bash
 large!
 ```
-
 ---
 name: control-while
-
 # control structures: while/do/done
 
 --
@@ -1002,27 +919,22 @@ $ function f() {
     done
 }
 ```
-
 --
 ```bash
 $ f foo bar baz
 ```
-
 --
 ```bash
 0: foo
 1: bar
 2: baz
 ```
-
 ---
 name: control-case
-
 # control structures: case/in/esac
 
 --
 name: control-case-ex
-
 ```bash
 $ function nth() {
     case ${1: -1} in
@@ -1034,17 +946,14 @@ $ function nth() {
     esac
 }
 ```
-
 --
 ```bash
 $ nth 3
 ```
-
 --
 ```bash
 3rd
 ```
-
 ---
 template: control-case-ex
 
@@ -1052,12 +961,10 @@ template: control-case-ex
 ```bash
 $ nth 105
 ```
-
 --
 ```bash
 105th
 ```
-
 ---
 template: control-case-ex
 
@@ -1065,12 +972,10 @@ template: control-case-ex
 ```bash
 $ nth foo
 ```
-
 --
 ```bash
 not a number
 ```
-
 ---
 name: control-for-do
 # control structures: for/do/done
@@ -1089,7 +994,6 @@ done
 4
 5
 ```
-
 ---
 name: control-for-in
 # control structures: for/in/do/done
@@ -1108,11 +1012,9 @@ done
 4
 5
 ```
-
 ---
 name: control-for-in-ex
 template: control-for-in
-
 
 ```bash
 $ names=("Alice" "Bob jr." "Carol" "Dave")
@@ -1131,7 +1033,6 @@ jr.
 Carol
 Dave
 ```
-
 ---
 template: control-for-in-ex
 
@@ -1147,7 +1048,6 @@ Bob jr.
 Carol
 Dave
 ```
-
 ---
 name: command-subst
 # command substitution
@@ -1172,7 +1072,6 @@ $ echo ${seconds}
 ```bash
 1412160713
 ```
-
 ---
 template: command-subst
 
@@ -1181,7 +1080,6 @@ $ cat /etc/hostname
 ```
 --
 name: command-subst-ex
-
 ```bash
 echrgys-laptop
 ```
@@ -1189,10 +1087,8 @@ echrgys-laptop
 ```bash
 $ hostname=$(cat /etc/hostname) # slow!
 ```
-
 ---
 template: command-subst-ex
-
 ```bash
 $ hostname=$(&lt;/etc/hostname)
 ```
@@ -1204,7 +1100,6 @@ $ echo ${hostname}
 ```bash
 echrgys-laptop
 ```
-
 ---
 name: compound-group
 # compound commands: group
@@ -1223,7 +1118,6 @@ b
 $ f=file.txt
 $ [ -f ${f} ] || { echo "creating file"; touch ${f}; }
 ```
-
 ---
 name: compound-subshell
 # compound commands: subshell
@@ -1247,7 +1141,6 @@ $ pwd
 $ ls /tmp/*.txt
 /tmp/temp.txt
 ```
-
 ---
 template: compound-subshell
 
@@ -1266,7 +1159,6 @@ $ echo $i
 ```bash
 1
 ```
-
 ---
 name: pipelines
 # pipelines
@@ -1292,7 +1184,6 @@ ghi
 def
 abc
 ```
-
 ---
 template: pipelines
 
@@ -1313,7 +1204,6 @@ $ (echo abc; echo def; echo ghi) | tac | rev | tail -n1
 ```bash
 cba
 ```
-
 ---
 template: pipelines
 
@@ -1367,7 +1257,6 @@ $ echo {00..999}
 992 993 994 995 996 997 998 999
 
 ```
-
 ---
 name: brace-expansion
 # brace expansion
@@ -1421,7 +1310,6 @@ template: brace-expansion-ex
 ```bash
 $ mv /mnt/really/long/path/with/typo/is/anno{i,y}ing
 ```
-
 ---
 name: parameter-expansion
 # parameter expansion
@@ -1550,14 +1438,12 @@ $ echo ${s##*.}
 ```bash
 e
 ```
-
 ---
 template: parameter-expansion
 
 ```bash
 $ f=/some/path/to/file.txt
 ```
-
 --
 ```bash
 $ basename ${f}
@@ -1595,7 +1481,6 @@ $ echo ${f%/*}
 ```bash
 /some/path/to
 ```
-
 ---
 template: parameter-expansion
 --
@@ -1622,7 +1507,6 @@ $ echo s is: ${s:-"default"}
 ```bash
 s is: default
 ```
-
 ---
 template: parameter-expansion
 --
@@ -1649,7 +1533,6 @@ $ echo s is: ${s-"default"}
 ```bash
 s is:
 ```
-
 ---
 name: arithmetic-expansion
 # arithmetic expansion
@@ -1740,7 +1623,6 @@ $ echo $(( 2#1010101010 ))
 ```bash
 682
 ```
-
 ---
 name: let
 # let
@@ -1766,7 +1648,6 @@ $ let i=i/3
 ```bash
 8
 ```
-
 ---
 name: regex
 # regular expressions
@@ -1790,7 +1671,6 @@ match: baz
 ```
 ---
 template: regex
-
 --
 ```bash
 $ regex="^x x"
@@ -1808,10 +1688,8 @@ done
 match: x x
 match: x xyz
 ```
-
 ---
 template: regex
-
 --
 ```bash
 $ regex="^(.*):([0-9]+)"
@@ -1833,7 +1711,6 @@ EOF
 file: source.cc line: 23
 file: header.hh line: 45
 ```
-
 ---
 name: io
 # I/O redirection
@@ -2068,7 +1945,6 @@ bash -c 'echo $$; exec readlink /proc/self'
 11728
 11728
 ```
-
 ---
 name: exec-redir
 # exec (redirection)
@@ -2101,7 +1977,6 @@ foobar
 ```bash
 $ exec ${FD}&gt;&amp;-
 ```
-
 ---
 template: exec-redir
 --
@@ -2132,7 +2007,6 @@ foobar
 ```bash
 $ exec 666&gt;&amp;-
 ```
-
 ---
 # useless use of cat
 
@@ -2148,7 +2022,6 @@ $ grep ${USER} &lt; /etc/passwd
 ```bash
 $ grep ${USER} /etc/passwd
 ```
-
 ---
 name: proc-subst
 # process substitution
@@ -2169,7 +2042,6 @@ $ echo &lt;(echo foo)
 ```bash
 /dev/fd/63
 ```
-
 ---
 template: proc-subst
 ```bash
@@ -2207,7 +2079,6 @@ $ diff -u &lt;(ssh esekilx5160 rpm -qa | sort) \
 +gnome-screensaver-2.28.3-0.32.1
 [...]
 ```
-
 ---
 # job control
 
@@ -2235,7 +2106,6 @@ $ kill %1
 ```bash
 [1]+  Terminated    ( sleep $[20*60]; echo "wake up!" )
 ```
-
 ---
 name: trap
 # trap
@@ -2268,7 +2138,6 @@ $ kill %1
 ```bash
 exiting...
 ```
-
 ---
 name: getopts
 # getopts
@@ -2286,7 +2155,6 @@ name: getopts
 - argument order matters
 
 --
-
 .warn[discouraged, use getopt instead!]
 
 ---
@@ -2328,7 +2196,6 @@ while true; do
     esac
 done
 ```
-
 ---
 name: eval
 # eval
@@ -2343,7 +2210,6 @@ $ var2=bar
 ```
 --
 name: eval-ex
-
 ```bash
 $ declare -i i=1
 ```
@@ -2378,7 +2244,6 @@ $ eval "echo \${var${i}}"
 ```bash
 bar
 ```
-
 ---
 name: good-habits
 # good habits
@@ -2418,7 +2283,6 @@ $ bash -c "set -e; false; echo done"; echo $?
 ```bash
 1
 ```
-
 ---
 template: good-habits
 ```bash
@@ -2448,7 +2312,6 @@ $ bash -c 'set -u; message="foo"; echo msg=${mesage}'
 ```bash
 bash: mesage: unbound variable
 ```
-
 ---
 name: pitfalls
 # pitfalls
@@ -2504,10 +2367,8 @@ $ func
 ```bash
 done
 ```
-
 ---
 template: pitfalls-ex2
-
 ```bash
 $ set -e
 $ func() {
@@ -2534,10 +2395,8 @@ $ func
 ```bash
 (shell exits with code 1)
 ```
-
 ---
 template: pitfalls
-
 --
 name: pitfalls-ex3
 ```bash
@@ -2563,13 +2422,10 @@ $ let i++; echo $?
 ```bash
 0
 ```
-
 ---
 template: pitfalls-ex3
-
 ---
 template: pitfalls
-
 ```bash
 $ i=0
 $ i=$((i + 1)); echo $?
@@ -2590,7 +2446,6 @@ $ echo $i
 ```bash
 google-styleguide.googlecode.com/svn/trunk/shell.xml
 ```
-
 ---
 name: shellcheck
 # shellcheck
@@ -2636,7 +2491,6 @@ drwxr-xr-x 1 chris chris  522 Mar 13 10:08 pkg
 drwxr-xr-x 1 chris chris  854 Apr 10 09:27 projects
 -rw-r--r-- 1 chris chris  972 Apr 13 09:17 todo
 ```
-
 ---
 name: readline
 # readline
@@ -2671,10 +2525,8 @@ $ cp file1 /some/very/long/path/to/dir <Alt-b><Ctrl-k>
 ```bash
 $ cp file1
 ```
-
 ---
 template: readline
-
 ```bash
 $ <Up>
 ```
@@ -2688,7 +2540,6 @@ $ cp file1 /some/very/long/path/to/dir <Enter>
 ```
 ---
 template: readline
-
 ```bash
 $ cat &gt;&gt; ~/.inputrc &lt;&lt;EOF
 "\e[5~": history-search-backward
@@ -2705,7 +2556,6 @@ $ git diff <Page-up>
 ```bash
 $ git commit -am "work in progress" <Enter>
 ```
-
 ---
 template: readline
 
@@ -2716,14 +2566,11 @@ $ set -o vi
 ```bash
 $ set -o emacs
 ```
-
 ---
 template: readline
-
 ```bash
 $ man 3 readline
 ```
-
 ---
 name: completion
 # completion
@@ -2762,10 +2609,8 @@ $ cd doc/bash-s<Tab>
 ```bash
 $ cd doc/bash-scripting <Enter>
 ```
-
 ---
 template: completion
-
 ```bash
 $ ssh<Tab><Tab>
 ```
@@ -2774,7 +2619,6 @@ $ ssh<Tab><Tab>
 ssh          ssh-agent    sshd         sshfs
 ssh-add      ssh-copy-id  ssh-keygen   ssh-keyscan
 ```
-
 ---
 template: completion
 
@@ -2790,10 +2634,8 @@ esekilx5325           gerritmirror.rnd.ki.sw.ericsson.se
 esekilx5326           github.com
 [...]
 ```
-
 ---
 template: completion
-
 ```bash
 $ gcc -W<Tab><Tab>
 ```
