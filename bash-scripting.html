@@ -1651,6 +1651,123 @@ s is:
 ```
 
 ---
+name: arithmetic-expansion
+# arithmetic expansion
+
+--
+```bash
+$ echo $(( 1 + 1 ))
+```
+```bash
+2
+```
+--
+```bash
+$ echo $[ 1 + 1 ] # deprecated!
+```
+```bash
+2
+```
+---
+template: arithmetic-expansion
+--
+```bash
+$ i=5
+$ echo $(( $i * $i ))
+```
+```bash
+25
+```
+--
+```bash
+$ echo $(( i * i ))
+```
+```bash
+25
+```
+---
+template: arithmetic-expansion
+--
+```bash
+$ echo $(( 2**32 - 1 ))
+```
+```bash
+4294967295
+```
+--
+```bash
+$ echo $(( 2**64 ))
+```
+```bash
+0
+```
+---
+template: arithmetic-expansion
+--
+```bash
+$ echo $(( foo ))
+```
+```bash
+0
+```
+--
+```bash
+$ echo $?
+```
+```bash
+0
+```
+---
+template: arithmetic-expansion
+--
+```bash
+$ echo $(( 0100 ))
+```
+```bash
+64
+```
+--
+```bash
+$ echo $(( 0xDEADBEEF ))
+```
+```bash
+3735928559
+```
+--
+```bash
+$ echo $(( 2#1010101010 ))
+```
+```bash
+682
+```
+
+---
+name: let
+# let
+
+--
+```bash
+$ i=12
+```
+```bash
+$ let i=i+i
+```
+--
+```bash
+$ echo $i
+```
+```bash
+24
+```
+--
+```bash
+$ let i=i/3
+```
+```bash
+8
+```
+
+---
 name: regex
 # regular expressions
 
