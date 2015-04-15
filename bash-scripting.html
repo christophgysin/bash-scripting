@@ -2612,6 +2612,119 @@ if test "X&#96;(echo '\t') 2&gt;/dev/null" = 'X\t'; then
                              sequences. Consider printf.
 ```
 ---
+name: interactive
+# interactive use
+
+--
+```bash
+$ cat ~/.bashrc
+```
+--
+```bash
+export EDITOR=vim
+export HISTCONTROL=ignoredups
+alias l='ls -lh --color=auto'
+```
+--
+```bash
+$ l
+```
+```bash
+total 8.0K
+drwxr-xr-x 1 chris chris   74 Feb 12 12:51 doc
+drwxr-xr-x 1 chris chris  522 Mar 13 10:08 pkg
+drwxr-xr-x 1 chris chris  854 Apr 10 09:27 projects
+-rw-r--r-- 1 chris chris  972 Apr 13 09:17 todo
+```
+
+---
+name: readline
+# readline
+
+--
+```bash
+$ cp file1 /some/very/long/path/to/dir <Ctrl-c>
+```
+```bash
+$
+```
+--
+```bash
+$ cp file1 /some/very/long/path/to/dir <Ctrl-w>
+```
+```bash
+$ cp file1
+```
+---
+template: readline
+
+```bash
+$ cp file1 /some/very/long/path/to/dir <Alt-b><Alt-b>
+```
+```bash
+$ cp -f file1 /some/very/long/path/to/dir
+```
+--
+```bash
+$ cp file1 /some/very/long/path/to/dir <Alt-b><Ctrl-k>
+```
+```bash
+$ cp file1
+```
+
+---
+template: readline
+
+```bash
+$ <Up>
+```
+--
+```bash
+$ cp file1 <Up>
+```
+--
+```bash
+$ cp file1 /some/very/long/path/to/dir <Enter>
+```
+---
+template: readline
+
+```bash
+$ cat &gt;&gt; ~/.inputrc &lt;&lt;EOF
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+EOF
+```
+--
+```bash
+$ git <Page-up>
+```
+```bash
+$ git diff <Page-up>
+```
+```bash
+$ git commit -am "work in progress" <Enter>
+```
+
+---
+template: readline
+
+```bash
+$ set -o vi
+```
+--
+```bash
+$ set -o emacs
+```
+
+---
+template: readline
+
+```bash
+$ man 3 readline
+```
+
+---
 class: center, middle
 
 # the end

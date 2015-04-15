@@ -3,15 +3,6 @@
   - source foo.inc.sh
 
 - interactive use:
-  - readline
-    - editing
-      - ^W, ^K, ^C
-    - set -o vi
-    - history
-    - inputrc
-    - history search
-    - man 3 readline
-  - aliases
   - completion
     - commands
     - paths
