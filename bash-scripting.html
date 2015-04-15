@@ -2725,6 +2725,94 @@ $ man 3 readline
 ```
 
 ---
+name: completion
+# completion
+
+--
+```bash
+$ cd d<Tab>
+```
+--
+```bash
+$ cd doc/
+```
+--
+```bash
+$ cd doc/b<Tab>
+```
+--
+```bash
+$ cd doc/bash-
+```
+--
+```bash
+$ cd doc/bash-<Tab><Tab>
+```
+--
+```bash
+bash-scripting bash-examples
+```
+---
+template: completion
+
+```bash
+$ cd doc/bash-s<Tab>
+```
+--
+```bash
+$ cd doc/bash-scripting <Enter>
+```
+
+---
+template: completion
+
+```bash
+$ ssh<Tab><Tab>
+```
+--
+```bash
+ssh          ssh-agent    sshd         sshfs
+ssh-add      ssh-copy-id  ssh-keygen   ssh-keyscan
+```
+
+---
+template: completion
+
+```bash
+$ ssh <Tab><Tab>
+```
+--
+```bash
+esekilx5322           gerrit
+esekilx5323           gerrit.ericsson.se
+esekilx5324           gerritmirror
+esekilx5325           gerritmirror.rnd.ki.sw.ericsson.se
+esekilx5326           github.com
+[...]
+```
+
+---
+template: completion
+
+```bash
+$ gcc -W<Tab><Tab>
+```
+--
+```bash
+Display all 196 possibilities? (y or n)
+-W                              -Wnested-externs
+-Wabi                           -Wnoexcept
+-Wabi-tag                       -Wnonnull
+-Waddress                       -Wnon-template-friend
+-Waggregate-return              -Wnon-virtual-dtor
+-Waggressive-loop-optimizations -Wnormalized=
+-Waliasing                      -Wold-style-cast
+-Walign-commons                 -Wold-style-declaration
+-Wall                           -Wold-style-definition
+-Wampersand                     -Wopenmp-simd
+[...]
+```
+---
 class: center, middle
 
 # the end

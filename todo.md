@@ -3,9 +3,6 @@
   - source foo.inc.sh
 
 - interactive use:
-  - completion
-    - commands
-    - paths
   - programmable completion
     - ssh hosts
     - git branches
