@@ -448,6 +448,62 @@ $ greeter bob
 Hello bob!
 ```
 ---
+# functions
+
+```bash
+$ function func() { return 0; }
+$ func; echo $?
+```
+```bash
+0
+```
+---
+# functions
+```bash
+$ function func() { return 1; }
+$ func; echo $?
+```
+```bash
+1
+```
+---
+# functions
+```bash
+$ function func() { return -1; }
+$ func; echo $?
+```
+```bash
+255
+```
+---
+# functions
+```bash
+$ function func() { return 256; }
+$ func; echo $?
+```
+```bash
+0
+```
+---
+# functions
+```bash
+$ function func() { return; }
+$ func; echo $?
+```
+```bash
+0
+```
+---
+# functions
+```bash
+$ function func() { false; return; }
+$ func; echo $?
+```
+```bash
+1
+```
+---
+name: local
 # local variables
 
 ```bash
@@ -1225,6 +1281,107 @@ $ echo s is: ${s-"default"}
 s is:
 ```
 ---
+name: arithmetic-expansion
+# arithmetic expansion
+
+```bash
+$ echo $(( 1 + 1 ))
+```
+```bash
+2
+```
+```bash
+$ echo $[ 1 + 1 ] # deprecated!
+```
+```bash
+2
+```
+---
+# arithmetic-expansion
+```bash
+$ i=5
+$ echo $(( $i * $i ))
+```
+```bash
+25
+```
+```bash
+$ echo $(( i * i ))
+```
+```bash
+25
+```
+---
+# arithmetic-expansion
+```bash
+$ echo $(( 2**32 - 1 ))
+```
+```bash
+4294967295
+```
+```bash
+$ echo $(( 2**64 ))
+```
+```bash
+0
+```
+---
+# arithmetic-expansion
+```bash
+$ echo $(( foo ))
+```
+```bash
+0
+```
+```bash
+$ echo $?
+```
+```bash
+0
+```
+---
+# arithmetic-expansion
+```bash
+$ echo $(( 0100 ))
+```
+```bash
+64
+```
+```bash
+$ echo $(( 0xDEADBEEF ))
+```
+```bash
+3735928559
+```
+```bash
+$ echo $(( 2#1010101010 ))
+```
+```bash
+682
+```
+---
+name: let
+# let
+
+```bash
+$ i=12
+```
+```bash
+$ let i=i+i
+```
+```bash
+$ echo $i
+```
+```bash
+24
+```
+```bash
+$ let i=i/3
+```
+```bash
+8
+```
+---
 # regular expressions
 
 ```bash
@@ -1240,6 +1397,42 @@ done
 ```bash
 match: bar
 match: baz
+```
+---
+# regular expressions
+```bash
+$ regex="^x x"
+```
+```bash
+$ for s in "xxx" "x x" "x xyz"; do
+    if [[ "${s}" =~ $regex ]]; then
+        echo match: ${s}
+    fi
+done
+```
+```bash
+match: x x
+match: x xyz
+```
+---
+# regular expressions
+```bash
+$ regex="^(.*):([0-9]+)"
+```
+```bash
+$ while read s; do
+    if [[ "${s}" =~ $regex ]]; then
+        echo -n "file: ${BASH_REMATCH[1]}"
+        echo   " line: ${BASH_REMATCH[2]}"
+    fi
+done &lt;&lt;EOF
+source.cc:23
+header.hh:45
+EOF
+```
+```bash
+file: source.cc line: 23
+file: header.hh line: 45
 ```
 ---
 # I/O redirection
@@ -1366,6 +1559,49 @@ mail
 [...]
 ```
 ---
+name: here-strings
+# here-strings
+```bash
+$ input="foo:bar:baz"
+```
+```bash
+$ echo "${input}" | cut -d: -f2
+bar
+```
+```bash
+$ cut -d: -f2 &lt;&lt;&lt;"${input}"
+bar
+```
+---
+name: here-documents
+# here-documents
+```bash
+$ apply_config --help
+Usage: apply_config &lt;config file&gt;
+```
+```bash
+$ echo "var1=foo" &gt; config.txt
+$ echo "var2=bar" &gt;&gt; config.txt
+$ echo "var3=baz" &gt;&gt; config.txt
+$ apply_config config.txt
+```
+```bash
+$ (
+    echo "var1=foo"
+    echo "var2=bar"
+    echo "var3=baz"
+  ) | apply_config -
+```
+---
+# here-documents
+```bash
+$ apply_config - &lt;&lt;EOF
+var1=foo
+var2=bar
+var3=baz
+EOF
+```
+---
 # exec
 
 ```bash
@@ -1475,7 +1711,6 @@ $ echo &lt;(echo foo)
 ```
 ---
 # process substitution
-
 ```bash
 $ ssh esekilx5160 rpm -qa | sort &gt; 5160.pkgs
 ```
@@ -1490,7 +1725,6 @@ $ rm 516{0,3}.pkgs
 ```
 ---
 # process substitution
-
 ```bash
 $ diff -u &lt;(ssh esekilx5160 rpm -qa | sort) \
           &lt;(ssh esekilx5163 rpm -qa | sort)
@@ -1706,7 +1940,6 @@ msg=
 ```
 ---
 # good habits
-
 ```bash
 #!/bin/bash
 set -e
@@ -1739,7 +1972,6 @@ start
 ```
 ---
 # pitfalls
-
 ```bash
 $ cat file
 ```
@@ -1790,6 +2022,43 @@ $ func
 (shell exits with code 1)
 ```
 ---
+# pitfalls
+```bash
+$ i=0
+$ let i++; echo $?
+```
+```bash
+1
+```
+```bash
+$ echo $i
+```
+```bash
+1
+```
+```bash
+$ let i++; echo $?
+```
+```bash
+0
+```
+---
+# pitfalls
+
+```bash
+$ i=0
+$ i=$((i + 1)); echo $?
+```
+```bash
+0
+```
+```bash
+$ echo $i
+```
+```bash
+1
+```
+---
 # coding style
 
 ```bash
@@ -1810,6 +2079,172 @@ if test "X&#96;(echo '\t') 2&gt;/dev/null" = 'X\t'; then
           ^-- SC2006: Use $(..) instead of &#96;..
                  ^-- SC2028: echo won't expand escape
                              sequences. Consider printf.
+```
+---
+name: interactive
+# interactive use
+
+```bash
+$ cat ~/.bashrc
+```
+```bash
+export EDITOR=vim
+export HISTCONTROL=ignoredups
+alias l='ls -lh --color=auto'
+```
+```bash
+$ l
+```
+```bash
+total 8.0K
+drwxr-xr-x 1 chris chris   74 Feb 12 12:51 doc
+drwxr-xr-x 1 chris chris  522 Mar 13 10:08 pkg
+drwxr-xr-x 1 chris chris  854 Apr 10 09:27 projects
+-rw-r--r-- 1 chris chris  972 Apr 13 09:17 todo
+```
+---
+# readline
+```bash
+$ cp file1 /some/very/long/path/to/dir <Ctrl-c>
+```
+```bash
+$
+```
+```bash
+$ cp file1 /some/very/long/path/to/dir <Ctrl-w>
+```
+```bash
+$ cp file1
+```
+---
+# readline
+
+```bash
+$ cp file1 /some/very/long/path/to/dir <Alt-b><Alt-b>
+```
+```bash
+$ cp -f file1 /some/very/long/path/to/dir
+```
+```bash
+$ cp file1 /some/very/long/path/to/dir <Alt-b><Ctrl-k>
+```
+```bash
+$ cp file1
+```
+---
+# readline
+```bash
+$ <Up>
+```
+```bash
+$ cp file1 <Up>
+```
+```bash
+$ cp file1 /some/very/long/path/to/dir <Enter>
+```
+---
+# readline
+```bash
+$ cat &gt;&gt; ~/.inputrc &lt;&lt;EOF
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+EOF
+```
+```bash
+$ git <Page-up>
+```
+```bash
+$ git diff <Page-up>
+```
+```bash
+$ git commit -am "work in progress" <Enter>
+```
+---
+# readline
+
+```bash
+$ set -o vi
+```
+```bash
+$ set -o emacs
+```
+---
+# readline
+```bash
+$ man 3 readline
+```
+---
+name: completion
+# completion
+
+```bash
+$ cd d<Tab>
+```
+```bash
+$ cd doc/
+```
+```bash
+$ cd doc/b<Tab>
+```
+```bash
+$ cd doc/bash-
+```
+```bash
+$ cd doc/bash-<Tab><Tab>
+```
+```bash
+bash-scripting bash-examples
+```
+---
+# completion
+
+```bash
+$ cd doc/bash-s<Tab>
+```
+```bash
+$ cd doc/bash-scripting <Enter>
+```
+---
+# completion
+```bash
+$ ssh<Tab><Tab>
+```
+```bash
+ssh          ssh-agent    sshd         sshfs
+ssh-add      ssh-copy-id  ssh-keygen   ssh-keyscan
+```
+---
+# completion
+
+```bash
+$ ssh <Tab><Tab>
+```
+```bash
+esekilx5322           gerrit
+esekilx5323           gerrit.ericsson.se
+esekilx5324           gerritmirror
+esekilx5325           gerritmirror.rnd.ki.sw.ericsson.se
+esekilx5326           github.com
+[...]
+```
+---
+# completion
+```bash
+$ gcc -W<Tab><Tab>
+```
+```bash
+Display all 196 possibilities? (y or n)
+-W                              -Wnested-externs
+-Wabi                           -Wnoexcept
+-Wabi-tag                       -Wnonnull
+-Waddress                       -Wnon-template-friend
+-Waggregate-return              -Wnon-virtual-dtor
+-Waggressive-loop-optimizations -Wnormalized=
+-Waliasing                      -Wold-style-cast
+-Walign-commons                 -Wold-style-declaration
+-Wall                           -Wold-style-definition
+-Wampersand                     -Wopenmp-simd
+[...]
 ```
 ---
 class: center, middle
